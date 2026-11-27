@@ -1,0 +1,32 @@
+---
+description: English for commits, GitHub text, and code comments
+alwaysApply: true
+---
+
+# English repository text
+
+Text that is stored in this repo or published on GitHub is English. Replies in chat follow the user's language.
+
+## Commits and GitHub
+
+- Commit subjects and bodies are English, imperative, and say why.
+- Pull request titles and descriptions, issue titles and bodies, release notes, and labels are English.
+- Do not mix Chinese into any of that text.
+
+```
+fix: keep the sent line on the card
+
+The kernel is not connected yet, so the line has nowhere else to go.
+```
+
+## Comments and docs
+
+- Code comments, doc comments, and TODOs are English.
+- README and other docs checked into the repo are English.
+- Do not add a Chinese comment, even a short one.
+
+```ts
+// The kernel is not connected yet; keep the line on this card.
+```
+
+User-facing UI copy may stay Chinese. That is product language, not a comment or a commit.

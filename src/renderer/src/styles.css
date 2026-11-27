@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-sky: #d7e7ef;
+  --color-aside: #e9f4f7;
+  --color-ink: #505050;
+  --color-muted: #9aa0a6;
+  --color-card: #fefffd;
+  --font-sans: 'Source Sans Pro', 'Hiragino Sans GB', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --font-mono: 'Cascadia Code', 'Sarasa Gothic Mono', ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #d7e7ef;
+  color: #505050;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  scrollbar-color: #c5d8e1 transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5d8e1;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9fbfcc;
+  background-clip: padding-box;
+}
+
+.window-drag {
+  -webkit-app-region: drag;
+}
+
+.window-drag input,
+.window-drag button,
+.window-drag textarea,
+.window-drag a {
+  -webkit-app-region: no-drag;
+}
