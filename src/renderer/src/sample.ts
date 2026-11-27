@@ -125,6 +125,21 @@ export const posts: Post[] = [
   }
 ]
 
+export type CommentItem = {
+  id: string
+  author: string
+  text: string
+  postId: string
+  date: string
+}
+
+// Placeholder comments for the "最新评论" tab. Replace with real data later.
+export const latestComments: CommentItem[] = [
+  { id: 'c1', author: 'guai', text: '超时之后，没发出去的内容要不要先存下来？', postId: 'p1', date: '刚刚' },
+  { id: 'c2', author: '你', text: '对账入口先别合并，等差异列完再说。', postId: 'p2', date: '昨天' },
+  { id: 'c3', author: 'guai', text: '工作区选好以后，读写都会落在那个文件夹里。', postId: 'p3', date: '11 月 26 日' }
+]
+
 export const changedFiles = [
   { path: 'src/auth/session.ts', add: 3, del: 1 },
   { path: 'src/pages/login.tsx', add: 4, del: 0 }

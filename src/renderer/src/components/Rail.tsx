@@ -1,29 +1,15 @@
-import { Eye, TerminalSquare } from 'lucide-react'
+import { TerminalSquare } from 'lucide-react'
 import { useState } from 'react'
-import { changedFiles, initialTodos, posts } from '../sample'
+import { changedFiles, initialTodos } from '../sample'
+import { SideTabs } from './SideTabs'
 
 export function Rail() {
   const [todos, setTodos] = useState(initialTodos)
   const [terminalOpen, setTerminalOpen] = useState(false)
 
   return (
-    <aside className="w-[240px] shrink-0 py-6 pr-4 pb-8 pl-1">
-      <ul className="flex flex-col gap-3">
-        {posts.slice(0, 4).map((post) => (
-          <li key={post.id} className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[13px] shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
-              {post.title.slice(0, 1)}
-            </span>
-            <span className="min-w-0">
-              <span className="block truncate text-[13px] leading-5">{post.title}</span>
-              <span className="mt-0.5 flex items-center gap-1 text-[12px] text-[#a0a0a0]">
-                <Eye size={12} />
-                {post.views}
-              </span>
-            </span>
-          </li>
-        ))}
-      </ul>
+    <aside className="w-[240px] shrink-0 pt-5 pr-[13px] pb-8 pl-[13px]">
+      <SideTabs />
 
       <h2 className="mt-7 mb-3 flex items-center gap-2 text-[14px] text-ink">
         <span className="inline-block h-3.5 w-1 rounded-full bg-[#7eb8cc]" />

@@ -1,5 +1,12 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, nativeImage, shell } from 'electron'
 import { join } from 'path'
+
+const iconPath = join(__dirname, '../../resources/icon.ico')
+const icon = nativeImage.createFromPath(join(__dirname, '../../resources/icon.png'))
+
+if (process.platform === 'win32') {
+  app.setAppUserModelId('com.jiejeitt.guai.desktop')
+}
 
 function createWindow(): void {
   const win = new BrowserWindow({
@@ -10,6 +17,7 @@ function createWindow(): void {
     show: false,
     autoHideMenuBar: true,
     title: 'Guai',
+    icon,
     backgroundColor: '#d7e7ef',
     titleBarStyle: 'hidden',
     titleBarOverlay: {
@@ -28,6 +36,14 @@ function createWindow(): void {
   win.on('ready-to-show', () => {
     win.show()
   })
+
+  if (process.platform === 'win32') {
+    win.setAppDetails({
+      appId: 'com.jiejeitt.guai.desktop',
+      appIconPath: iconPath,
+      appIconIndex: 0
+    })
+  }
 
   win.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)

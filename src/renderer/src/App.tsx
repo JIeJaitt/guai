@@ -1,5 +1,8 @@
+import { ChevronDown, Clock } from 'lucide-react'
 import { useState } from 'react'
 import { Article } from './components/Article'
+import { Heatmap } from './components/Heatmap'
+import { Logo } from './components/Logo'
 import { Rail } from './components/Rail'
 import { Sidebar, type NavId } from './components/Sidebar'
 import { posts as seedPosts, type Post, type Turn } from './sample'
@@ -25,6 +28,7 @@ export default function App() {
   const [openedId, setOpenedId] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
   const [query, setQuery] = useState('')
+  const [calendarOpen, setCalendarOpen] = useState(false)
 
   const visible = list.filter((post) => post.title.includes(query.trim()) || post.excerpt.includes(query.trim()))
   const opened = list.find((post) => post.id === openedId) ?? null
@@ -33,6 +37,7 @@ export default function App() {
     setNav(id)
     setOpenedId(null)
     setDraft('')
+    setCalendarOpen(false)
   }
 
   function send() {
@@ -71,13 +76,23 @@ export default function App() {
   const browsing = nav === 'home' || nav === 'new'
 
   return (
-    <div className="flex h-full flex-col bg-sky text-ink">
+    <div className="relative flex h-full flex-col bg-sky text-ink">
       <header className="window-drag flex h-[50px] shrink-0">
         <div className="flex h-full w-[220px] shrink-0 items-center gap-2 bg-aside px-6 text-[18px] tracking-wide">
-          <span className="inline-block h-4 w-4 rounded-sm bg-[#505050]" />
+          <Logo className="h-7 w-7" />
           guai
         </div>
-        <div className="flex min-w-0 flex-1 items-center px-7">
+        <div className="flex min-w-0 flex-1 items-center gap-3 px-7">
+          <button
+            type="button"
+            aria-label="动态日历"
+            aria-expanded={calendarOpen}
+            onClick={() => setCalendarOpen((open) => !open)}
+            className="flex h-8 items-center gap-0.5 rounded-full bg-[#f4f7f8] px-2 text-[#6d7c84]"
+          >
+            <Clock size={15} strokeWidth={1.7} />
+            <ChevronDown size={14} strokeWidth={1.7} className={calendarOpen ? 'rotate-180' : ''} />
+          </button>
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -88,6 +103,14 @@ export default function App() {
         <div className="flex w-[240px] shrink-0 items-center justify-end pr-4 text-[13px] text-[#8a8a8a]">DeepSeek · 刚刚</div>
         <div className="w-[138px] shrink-0" />
       </header>
+      {calendarOpen ? (
+        <>
+          <button type="button" aria-label="关闭动态日历" className="absolute top-[50px] right-0 bottom-0 left-0 z-10 cursor-default" onClick={() => setCalendarOpen(false)} />
+          <div className="absolute top-[58px] left-[248px] z-20 rounded-[8px] bg-card px-5 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+            <Heatmap />
+          </div>
+        </>
+      ) : null}
       <div className="flex min-h-0 flex-1">
         <Sidebar current={opened ? 'home' : nav} onNavigate={navigate} />
         <div className="flex min-h-0 min-w-0 flex-1 overflow-y-auto">
