@@ -5,7 +5,9 @@ import { Heatmap } from './components/Heatmap'
 import { Logo } from './components/Logo'
 import { Rail } from './components/Rail'
 import { Sidebar, type NavId } from './components/Sidebar'
+import { SettingsPage } from './components/SettingsPage'
 import { posts as seedPosts, type Post, type Turn } from './sample'
+import type { SettingId } from './settings/catalog'
 
 const pages: Record<Exclude<NavId, 'home' | 'new'>, { title: string; body: string }> = {
   workspace: {
@@ -15,10 +17,6 @@ const pages: Record<Exclude<NavId, 'home' | 'new'>, { title: string; body: strin
   skills: {
     title: '技能',
     body: '还没有技能。仓库里的 SKILL.md 之后会列在这里。'
-  },
-  settings: {
-    title: '设置',
-    body: '模型走 OpenAI 兼容端点，DeepSeek 作为第一组预设。地址还没填。'
   }
 }
 
@@ -29,6 +27,8 @@ export default function App() {
   const [draft, setDraft] = useState('')
   const [query, setQuery] = useState('')
   const [calendarOpen, setCalendarOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [settingId, setSettingId] = useState<SettingId>('api')
 
   const visible = list.filter((post) => post.title.includes(query.trim()) || post.excerpt.includes(query.trim()))
   const opened = list.find((post) => post.id === openedId) ?? null
@@ -37,6 +37,14 @@ export default function App() {
     setNav(id)
     setOpenedId(null)
     setDraft('')
+    setCalendarOpen(false)
+    setSettingsOpen(false)
+  }
+
+  function openSettings() {
+    setSettingsOpen(true)
+    setSettingId('api')
+    setOpenedId(null)
     setCalendarOpen(false)
   }
 
@@ -112,9 +120,19 @@ export default function App() {
         </>
       ) : null}
       <div className="flex min-h-0 flex-1">
-        <Sidebar current={opened ? 'home' : nav} onNavigate={navigate} />
+        <Sidebar
+          current={opened ? 'home' : nav}
+          settingsOpen={settingsOpen}
+          settingId={settingId}
+          onNavigate={navigate}
+          onOpenSettings={openSettings}
+          onCloseSettings={() => setSettingsOpen(false)}
+          onSelectSetting={setSettingId}
+        />
         <div className="flex min-h-0 min-w-0 flex-1 overflow-y-auto">
-          {browsing ? (
+          {settingsOpen ? (
+            <SettingsPage settingId={settingId} />
+          ) : browsing ? (
             <Article posts={visible} opened={opened} onOpen={setOpenedId} draft={draft} onDraft={setDraft} onSend={send} />
           ) : (
             <div className="min-w-0 flex-1 px-7 pt-6">
@@ -124,7 +142,7 @@ export default function App() {
               </article>
             </div>
           )}
-          <Rail />
+          {settingsOpen ? null : <Rail />}
         </div>
       </div>
     </div>
